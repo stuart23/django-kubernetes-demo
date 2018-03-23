@@ -46,7 +46,8 @@ def index(request):
 def messages(request):
     """ REST endpoint providing basic operations. GET will return the list of
     all messages created so far in JSON form, POST will add a new message to
-    the list of messages (guestbook).
+    the list of messages (guestbook) as well as trigger the celery process to
+    compute the hash of the message.
     """
     if request.method == 'GET':
         data = serializers.serialize("json", Message.objects.all())
