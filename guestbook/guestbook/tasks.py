@@ -9,7 +9,12 @@ def hasher(message_id):
     calculates a new hash, and then puts that back in the table.
     '''
     tree = MerkleTree()
-    message = Message.objects.get(pk=message_id)
+    try:
+        previous_message = Message.objects.get(pk=message_id-1)
+    except DoesNotExist:
+        pass
+    else:
+        tree.add_hash(previous_message)
     tree.add(message.text.encode())
     tree.build()
     message.hash = tree.root.val
