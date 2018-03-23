@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 from .models import Message
+from .tasks import hasher
 
 from django.core.cache import cache
 
@@ -51,7 +52,8 @@ def messages(request):
         data = serializers.serialize("json", Message.objects.all())
         return HttpResponse(data)
     elif request.method == 'POST':
-        Message.objects.create(text=request.body)
+        message = Message.objects.create(text=request.body)
+        hasher.delay(message.pk)
         return HttpResponse(request.body)
     else:
         return HttpResponse("Unsupported HTTP Verb.")

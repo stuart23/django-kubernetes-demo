@@ -5,4 +5,4 @@ ENV PATH /env/bin:$PATH
 ADD requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
 ADD . /app
-CMD celery -A guestbook worker -l info
+CMD celery -A guestbook worker -l info --loglevel=DEBUG

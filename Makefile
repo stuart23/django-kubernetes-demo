@@ -1,5 +1,5 @@
 PROJECT:=$(shell gcloud config list project --format="value(core.project)")
-PASSWORD:=$(shell openssl rand -hex 32 | base64)
+PASSWORD:=$(shell openssl rand -hex 28 | base64)
 
 .PHONY: templates
 templates:
