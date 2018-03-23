@@ -14,7 +14,7 @@ def hasher(message_id):
     except DoesNotExist:
         pass
     else:
-        tree.add_hash(previous_message)
+        tree.add_hash(previous_message.hash)
     message = Message.objects.get(pk=message_id)
     tree.add(message.text.encode())
     tree.build()
